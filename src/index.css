@@ -1,0 +1,36 @@
+@import "tailwindcss";
+@config "../tailwind.config.js";
+
+@theme inline {
+  --color-brand-page: var(--page);
+  --color-brand-surface: var(--panel);
+  --color-brand-raised: var(--panel-raised);
+  --color-brand-text: var(--text);
+  --color-brand-muted: var(--muted);
+  --color-brand-silver: var(--silver);
+  --color-brand-primary: var(--lime);
+}
+
+:root {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: var(--text, #1d1d1f);
+  background: var(--page, #f5f5f7);
+  color-scheme: light dark;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 400;
+  font-size: 14px;
+}
+
+* { box-sizing: border-box; }
+html { min-width: 320px; scroll-behavior: smooth; }
+body { margin: 0; min-width: 320px; min-height: 100vh; color: var(--text, #1d1d1f); background: var(--page, #f5f5f7); }
+button, input { font: inherit; }
+button { color: inherit; -webkit-tap-highlight-color: transparent; }
+button:focus-visible, input:focus-visible, a:focus-visible, [tabindex]:focus-visible {
+  outline: 3px solid rgba(0, 122, 255, .35);
+  outline-offset: 3px;
+}
+::selection { color: #fff; background: #007aff; }
