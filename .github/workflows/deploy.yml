@@ -37,9 +37,7 @@ jobs:
         run: npm run lint
 
       - name: Build site
-        run: npm run build -- --base="/${GITHUB_REPOSITORY#*/}/"
-        env:
-          VITE_API_BASE_URL: https://user-4frs.onrender.com
+        run: test -f .env && npm run build -- --base="/${GITHUB_REPOSITORY#*/}/"
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5

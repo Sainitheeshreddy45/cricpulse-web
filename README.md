@@ -11,6 +11,19 @@ value when the development server or production build starts, so restart or
 rebuild after changing it. The current value points to the deployed Render
 backend at `https://user-4frs.onrender.com`.
 
+## GitHub Pages Deployment
+
+The workflow in `.github/workflows/deploy.yml` builds and deploys the site on
+pushes to `main` or when run manually. In the repository's **Settings → Pages**,
+set the build and deployment source to **GitHub Actions**. Commit the root
+`.env` file with the public `VITE_API_BASE_URL`; the workflow reads it during
+the build, so the backend origin only needs to be updated there. Vite variables
+are included in browser code and must not contain secrets.
+
+The project site is served at
+`https://sainitheeshreddy45.github.io/cricpulse-web/` after the workflow
+completes successfully.
+
 Ball submissions use `POST /api/v1/scoring/ball` with the backend's
 `SubmitBallRequest` delivery-event DTO:
 
