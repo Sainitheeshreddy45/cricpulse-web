@@ -16,6 +16,7 @@ import { matchService } from '../services/matchService';
 import { teamService } from '../services/teamService';
 
 const PLAYER_LIST_KEYS = ['players', 'playerList', 'roster', 'members', 'results', 'content', 'items', 'data'];
+const APP_BASE_PATH = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 function unwrapPlayers(value) {
   if (Array.isArray(value)) return value;
@@ -83,12 +84,15 @@ async function loadMatchBundle(matchId) {
 }
 
 function readRoute(pathname = window.location.pathname) {
-  const matchRoute = pathname.match(/^\/matches\/([^/]+)\/?$/);
+  const appPath = APP_BASE_PATH && pathname.startsWith(`${APP_BASE_PATH}/`)
+    ? pathname.slice(APP_BASE_PATH.length)
+    : pathname === APP_BASE_PATH ? '/' : pathname;
+  const matchRoute = appPath.match(/^\/matches\/([^/]+)\/?$/);
   if (matchRoute) return { page: 'match', matchId: decodeURIComponent(matchRoute[1]) };
-  if (/^\/live\/?$/.test(pathname)) return { page: 'live', matchId: null };
-  if (/^\/create-match\/?$/.test(pathname)) return { page: 'create-match', matchId: null };
-  if (/^\/my-matches\/?$/.test(pathname)) return { page: 'my-matches', matchId: null };
-  if (/^\/settings\/?$/.test(pathname)) return { page: 'settings', matchId: null };
+  if (/^\/live\/?$/.test(appPath)) return { page: 'live', matchId: null };
+  if (/^\/create-match\/?$/.test(appPath)) return { page: 'create-match', matchId: null };
+  if (/^\/my-matches\/?$/.test(appPath)) return { page: 'my-matches', matchId: null };
+  if (/^\/settings\/?$/.test(appPath)) return { page: 'settings', matchId: null };
   return { page: 'home', matchId: null };
 }
 
@@ -103,7 +107,8 @@ export default function AppRoutes() {
   const [authOpen, setAuthOpen] = useState(false);
 
   const navigatePath = useCallback((path) => {
-    if (window.location.pathname !== path) window.history.pushState({}, '', path);
+    const appPath = `${APP_BASE_PATH}${path}`;
+    if (window.location.pathname !== appPath) window.history.pushState({}, '', appPath);
     setMatchesError('');
     setRoute(readRoute(path));
   }, []);

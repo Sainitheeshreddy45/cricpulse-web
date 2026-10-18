@@ -5,9 +5,11 @@
 The frontend uses the shared client in `src/api.js` for the `/api/v1` routes.
 Authentication uses `/api/v1/users/auth/register`, `/login`, `/me`, and
 `/search`. By default, requests go directly to
-`http://localhost:8080`. Set `VITE_API_BASE_URL` to override the backend origin.
-To use Vite's development proxy instead, set `VITE_API_BASE_URL` to an empty
-value; Vite forwards `/api` requests to `http://localhost:8080`.
+the backend origin configured by `VITE_API_BASE_URL` in the project-root
+`.env` file. Update that value when the backend URL changes. Vite loads the
+value when the development server or production build starts, so restart or
+rebuild after changing it. The current value points to the deployed Render
+backend at `https://user-4frs.onrender.com`.
 
 Ball submissions use `POST /api/v1/scoring/ball` with the backend's
 `SubmitBallRequest` delivery-event DTO:
